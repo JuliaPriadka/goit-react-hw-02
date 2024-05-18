@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Description from "./components/description/description";
 import Options from "./components/options/options";
@@ -7,10 +7,17 @@ import Notification from "./components/notification/notification";
 import PositiveFeedback from "./components/positiveFeedback/positiveFeedback";
 
 function App() {
-  const [count, setCount] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const localStorageSaved = localStorage.getItem("saved-feedback");
+
+  const [count, setCount] = useState(() => {
+    if (localStorageSaved !== null) {
+      return JSON.parse(localStorageSaved);
+    }
+    return {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
   });
 
   function updateFeedback(feedbackType) {
@@ -19,6 +26,10 @@ function App() {
       [feedbackType]: count[feedbackType] + 1,
     });
   }
+
+  useEffect(() => {
+    localStorage.setItem("saved-feedback", JSON.stringify(count));
+  }, [count]);
 
   const totalFeedback = count.good + count.neutral + count.bad;
   const positiveFeedback = Math.round((count.good / totalFeedback) * 100);
