@@ -52,7 +52,10 @@ function App() {
       />
       {totalFeedback > 0 ? <Feedback feedbacks={count} /> : <Notification />}
       {totalFeedback > 0 && (
-        <PositiveFeedback positiveFeedbackPercent={positiveFeedback} />
+        <PositiveFeedback
+          positiveFeedbackPercent={positiveFeedback}
+          totalFeedback={totalFeedback}
+        />
       )}
     </>
   );
