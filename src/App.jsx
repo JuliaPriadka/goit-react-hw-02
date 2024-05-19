@@ -4,7 +4,6 @@ import Description from "./components/description/description";
 import Options from "./components/options/options";
 import Feedback from "./components/feedback/feedback";
 import Notification from "./components/notification/notification";
-import PositiveFeedback from "./components/positiveFeedback/positiveFeedback";
 
 function App() {
   const localStorageSaved = localStorage.getItem("saved-feedback");
@@ -50,12 +49,14 @@ function App() {
         totalFeedback={totalFeedback}
         resetFunction={resetFeedback}
       />
-      {totalFeedback > 0 ? <Feedback feedbacks={count} /> : <Notification />}
-      {totalFeedback > 0 && (
-        <PositiveFeedback
+      {totalFeedback > 0 ? (
+        <Feedback
+          feedbacks={count}
           positiveFeedbackPercent={positiveFeedback}
           totalFeedback={totalFeedback}
         />
+      ) : (
+        <Notification />
       )}
     </>
   );
